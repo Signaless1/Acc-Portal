@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ACC Portal System
 
 A student academic credential portal built with **Flask**, **Python**, **HTML (Jinja2)**, and **SQLite**.
@@ -112,3 +113,7 @@ From there, an admin can:
 - Set `debug=False` and run behind a production WSGI server (e.g. `gunicorn`), not `app.run()`.
 - Load `SECRET_KEY` from a secrets manager / environment variable — never commit it.
 - Consider rate-limiting login attempts (e.g. `Flask-Limiter`) to slow brute-force attacks.
+=======
+# Acc-Portal
+A portal made for scholarship application and management for ACC using AI
+>>>>>>> 0e39d77f5350414e03454ba161de0409d2c72bdc
