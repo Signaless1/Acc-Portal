@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Applications - ACC Portal Admin{% endblock %}
+{% block container_class %}wide{% endblock %}
+{% block content %}
+    <h1>Scholarship Applications</h1>
+
+    <p>
+        <a href="{{ url_for('admin_applications') }}" class="btn">All</a>
+        <a href="{{ url_for('admin_applications', status='Pending') }}" class="btn">Pending</a>
+        <a href="{{ url_for('admin_applications', status='Approved') }}" class="btn">Approved</a>
+        <a href="{{ url_for('admin_applications', status='Rejected') }}" class="btn">Rejected</a>
+    </p>
+
+    {% if applications %}
+        <table>
+            <tr><th>Student</th><th>Type</th><th>Reason</th><th>Status</th><th>Submitted</th><th>Action</th></tr>
+            {% for a in applications %}
+            <tr>
+                <td>{{ a.username }}<br><span class="helper-text">{{ a.email }}</span></td>
+                <td>{{ a.scholarship_type }}</td>
+                <td>{{ a.reason }}</td>
+                <td><span class="badge {{ a.status }}">{{ a.status }}</span></td>
+                <td>{{ a.submitted_at }}</td>
+                <td>
+                    {% if a.status == 'Pending' %}
+                        <form method="POST" action="{{ url_for('admin_decide_application', application_id=a.id) }}" style="display:inline;">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <input type="hidden" name="decision" value="Approved">
+                            <button type="submit">Approve</button>
+                        </form>
+                        <form method="POST" action="{{ url_for('admin_decide_application', application_id=a.id) }}" style="display:inline;">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <input type="hidden" name="decision" value="Rejected">
+                            <button type="submit" style="background-color:#991b1b;">Reject</button>
+                        </form>
+                    {% else %}
+                        <span class="helper-text">Reviewed</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No applications found.</p>
+    {% endif %}
+{% endblock %}

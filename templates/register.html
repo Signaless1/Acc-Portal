@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Register - ACC Portal{% endblock %}
+{% block content %}
+    <h1>Create an Account</h1>
+    <p class="helper-text">Step 1 of 2 — after registering, you'll complete your student profile and upload your documents.</p>
+
+    <form method="POST" action="{{ url_for('register') }}">
+        {# csrf_token() is provided by Flask-WTF's CSRFProtect. This hidden
+           field must be present on every POST form, or the request will
+           be rejected (see app.py CSRFProtect setup). #}
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required minlength="3" maxlength="50">
+
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required minlength="8">
+        <p class="helper-text">At least 8 characters.</p>
+
+        <label for="confirm_password">Confirm Password</label>
+        <input type="password" id="confirm_password" name="confirm_password" required minlength="8">
+
+        <button type="submit">Create Account</button>
+    </form>
+
+    <p class="form-footer">Already have an account? <a href="{{ url_for('login') }}">Log in</a></p>
+{% endblock %}

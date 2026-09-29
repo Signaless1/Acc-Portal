@@ -1,0 +1,55 @@
+<!--
+    base.html
+    Shared page skeleton: navbar and flash message rendering.
+    All other templates extend this file and fill in the "content" block
+    defined near the bottom. Template tag syntax is intentionally never
+    written inside HTML comments anywhere in this project, since the
+    templating engine scans the whole file for tags, including text
+    inside HTML comments, and would try to parse it as real logic.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}ACC Portal{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="navbar">
+        <strong>ACC Portal</strong>
+        <div>
+            {% if session.get('user_id') %}
+                {% if session.get('is_admin') %}
+                    <a href="{{ url_for('admin_dashboard') }}">Admin Dashboard</a>
+                    <a href="{{ url_for('admin_students') }}">Students</a>
+                    <a href="{{ url_for('admin_applications') }}">Applications</a>
+                    <a href="{{ url_for('logout') }}">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                    <a href="{{ url_for('register_profile') }}">My Profile</a>
+                    <a href="{{ url_for('scholarship_apply') }}">Apply for Scholarship</a>
+                    <a href="{{ url_for('logout') }}">Logout</a>
+                {% endif %}
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('register') }}">Register</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="container {% block container_class %}{% endblock %}">
+        {# Flash messages: Flask stores (category, message) tuples that
+           were queued via flash() in app.py. We render them once here so
+           every page shows success/error feedback consistently. #}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Students - ACC Portal Admin{% endblock %}
+{% block container_class %}wide{% endblock %}
+{% block content %}
+    <h1>Registered Students</h1>
+
+    <form method="GET" action="{{ url_for('admin_students') }}">
+        <label for="q">Search by name, username, or email</label>
+        <input type="text" id="q" name="q" value="{{ query }}" placeholder="e.g. Juan Dela Cruz">
+        <button type="submit">Search</button>
+    </form>
+
+    {% if students %}
+        <table>
+            <tr><th>Username</th><th>Full Name</th><th>Email</th><th>Contact</th><th>Registered</th><th></th></tr>
+            {% for s in students %}
+            <tr>
+                <td>{{ s.username }}</td>
+                <td>{{ s.full_name or '—' }}</td>
+                <td>{{ s.email }}</td>
+                <td>{{ s.contact_number or '—' }}</td>
+                <td>{{ s.created_at }}</td>
+                <td><a href="{{ url_for('admin_student_detail', student_user_id=s.user_id) }}">View</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No students found.</p>
+    {% endif %}
+{% endblock %}

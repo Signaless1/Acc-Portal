@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}{{ user.username }} - ACC Portal Admin{% endblock %}
+{% block container_class %}wide{% endblock %}
+{% block content %}
+    <p><a href="{{ url_for('admin_students') }}">&larr; Back to Students</a></p>
+    <h1>{{ user.username }}</h1>
+    <p class="helper-text">{{ user.email }} · Registered {{ user.created_at }}</p>
+
+    <h2>Profile</h2>
+    {% if student %}
+        <table>
+            <tr><th>Full Name</th><td>{{ student.full_name }}</td></tr>
+            <tr><th>Address</th><td>{{ student.address }}</td></tr>
+            <tr><th>Contact Number</th><td>{{ student.contact_number }}</td></tr>
+            <tr><th>Birthdate</th><td>{{ student.birthdate }}</td></tr>
+        </table>
+    {% else %}
+        <p>This student has not completed their profile yet.</p>
+    {% endif %}
+
+    <h2>Uploaded Documents</h2>
+    {% if uploads %}
+        <table>
+            <tr><th>Category</th><th>File Name</th><th>Uploaded</th><th></th></tr>
+            {% for u in uploads %}
+            <tr>
+                <td>{{ u.file_category.replace('_', ' ').title() }}</td>
+                <td>{{ u.original_filename }}</td>
+                <td>{{ u.uploaded_at }}</td>
+                <td><a href="{{ url_for('view_upload', upload_id=u.id) }}" target="_blank">View</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No documents uploaded.</p>
+    {% endif %}
+
+    <h2>Scholarship Applications</h2>
+    {% if applications %}
+        <table>
+            <tr><th>Type</th><th>Reason</th><th>Status</th><th>Submitted</th></tr>
+            {% for a in applications %}
+            <tr>
+                <td>{{ a.scholarship_type }}</td>
+                <td>{{ a.reason }}</td>
+                <td><span class="badge {{ a.status }}">{{ a.status }}</span></td>
+                <td>{{ a.submitted_at }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No applications submitted.</p>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,133 @@
+/* =============================================================================
+   style.css — shared styling for the ACC Portal System.
+   Kept intentionally simple (no framework) so the project stays
+   dependency-free on the frontend.
+   ============================================================================= */
+
+* { box-sizing: border-box; }
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background-color: #f4f6f8;
+    color: #1f2937;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background-color: #1e3a8a;
+    color: white;
+    padding: 14px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin-left: 16px;
+    font-size: 14px;
+}
+
+.navbar a:hover { text-decoration: underline; }
+
+.container {
+    max-width: 640px;
+    margin: 40px auto;
+    background: white;
+    padding: 32px;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.container.wide {
+    max-width: 1000px;
+}
+
+h1, h2 { color: #1e3a8a; }
+
+label {
+    display: block;
+    margin-top: 14px;
+    margin-bottom: 4px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="date"],
+input[type="file"],
+select,
+textarea {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+textarea { resize: vertical; min-height: 90px; }
+
+button, .btn {
+    margin-top: 20px;
+    background-color: #1e3a8a;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    display: inline-block;
+    text-decoration: none;
+}
+
+button:hover, .btn:hover { background-color: #172a63; }
+
+.flash {
+    padding: 10px 14px;
+    border-radius: 4px;
+    margin-bottom: 14px;
+    font-size: 14px;
+}
+
+.flash.success { background-color: #dcfce7; color: #166534; }
+.flash.error { background-color: #fee2e2; color: #991b1b; }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px 10px;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 14px;
+}
+
+.badge {
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.badge.Pending { background-color: #fef3c7; color: #92400e; }
+.badge.Approved { background-color: #dcfce7; color: #166534; }
+.badge.Rejected { background-color: #fee2e2; color: #991b1b; }
+
+.helper-text {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+.form-footer {
+    margin-top: 16px;
+    font-size: 14px;
+}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Student Profile - ACC Portal{% endblock %}
+{% block content %}
+    <h1>Student Profile & Documents</h1>
+    <p class="helper-text">Step 2 of 2 — complete your profile and upload the required documents.</p>
+
+    {# enctype="multipart/form-data" is REQUIRED for file uploads to work;
+       without it, the browser sends file fields as plain text and the
+       server receives nothing usable in request.files. #}
+    <form method="POST" action="{{ url_for('register_profile') }}" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <label for="full_name">Full Name</label>
+        <input type="text" id="full_name" name="full_name" required>
+
+        <label for="address">Address</label>
+        <input type="text" id="address" name="address" required>
+
+        <label for="contact_number">Contact Number</label>
+        <input type="tel" id="contact_number" name="contact_number" required>
+
+        <label for="birthdate">Birthdate</label>
+        <input type="date" id="birthdate" name="birthdate" required>
+
+        <label for="valid_id">Valid ID (JPEG or PNG only)</label>
+        <input type="file" id="valid_id" name="valid_id" accept=".jpg,.jpeg,.png" required>
+        <p class="helper-text">Accepted formats: .jpg, .jpeg, .png — max 5 MB.</p>
+
+        <label for="credential">Academic Credential (JPEG, PNG, or PDF)</label>
+        <input type="file" id="credential" name="credential" accept=".jpg,.jpeg,.png,.pdf" required>
+        <p class="helper-text">E.g. transcript of records, diploma, or certificate — max 5 MB.</p>
+
+        <button type="submit">Submit Profile</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - ACC Portal{% endblock %}
+{% block content %}
+    <h1>Welcome, {{ session.get('username') }}</h1>
+
+    <h2>Profile Status</h2>
+    {% if student %}
+        <table>
+            <tr><th>Full Name</th><td>{{ student.full_name }}</td></tr>
+            <tr><th>Address</th><td>{{ student.address }}</td></tr>
+            <tr><th>Contact Number</th><td>{{ student.contact_number }}</td></tr>
+            <tr><th>Birthdate</th><td>{{ student.birthdate }}</td></tr>
+        </table>
+        <a class="btn" href="{{ url_for('register_profile') }}">Update Profile</a>
+    {% else %}
+        <p>You haven't completed your student profile yet.</p>
+        <a class="btn" href="{{ url_for('register_profile') }}">Complete Profile</a>
+    {% endif %}
+
+    <h2>Uploaded Documents</h2>
+    {% if uploads %}
+        <table>
+            <tr><th>Category</th><th>File Name</th><th>Uploaded</th><th></th></tr>
+            {% for u in uploads %}
+            <tr>
+                <td>{{ u.file_category.replace('_', ' ').title() }}</td>
+                <td>{{ u.original_filename }}</td>
+                <td>{{ u.uploaded_at }}</td>
+                {# The view link goes through the authenticated /uploads/<id>
+                   route, which checks the file belongs to the current
+                   user before serving it (see app.py view_upload). #}
+                <td><a href="{{ url_for('view_upload', upload_id=u.id) }}" target="_blank">View</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No documents uploaded yet.</p>
+    {% endif %}
+
+    <h2>Scholarship Applications</h2>
+    {% if applications %}
+        <table>
+            <tr><th>Type</th><th>Status</th><th>Submitted</th></tr>
+            {% for a in applications %}
+            <tr>
+                <td>{{ a.scholarship_type }}</td>
+                <td><span class="badge {{ a.status }}">{{ a.status }}</span></td>
+                <td>{{ a.submitted_at }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No scholarship applications submitted yet.</p>
+        <a class="btn" href="{{ url_for('scholarship_apply') }}">Apply Now</a>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Apply for Scholarship - ACC Portal{% endblock %}
+{% block content %}
+    <h1>Scholarship Application</h1>
+
+    <form method="POST" action="{{ url_for('scholarship_apply') }}" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <label for="scholarship_type">Scholarship Type</label>
+        <select id="scholarship_type" name="scholarship_type" required>
+            <option value="">-- Select a scholarship --</option>
+            <option value="Academic Merit">Academic Merit</option>
+            <option value="Financial Need">Financial Need</option>
+            <option value="Athletic">Athletic</option>
+            <option value="Community Service">Community Service</option>
+        </select>
+
+        <label for="reason">Reason for Applying</label>
+        <textarea id="reason" name="reason" required minlength="20"
+                  placeholder="Explain why you are applying for this scholarship..."></textarea>
+
+        <label for="supporting_doc">Supporting Document (optional)</label>
+        <input type="file" id="supporting_doc" name="supporting_doc" accept=".jpg,.jpeg,.png,.pdf">
+        <p class="helper-text">Accepted formats: .jpg, .jpeg, .png, .pdf — max 5 MB.</p>
+
+        <button type="submit">Submit Application</button>
+    </form>
+{% endblock %}

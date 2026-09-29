@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard - ACC Portal{% endblock %}
+{% block container_class %}wide{% endblock %}
+{% block content %}
+    <h1>Admin Dashboard</h1>
+
+    <table>
+        <tr>
+            <th>Total Students</th>
+            <th>Profiles Completed</th>
+            <th>Applications</th>
+            <th>Pending</th>
+            <th>Approved</th>
+            <th>Rejected</th>
+        </tr>
+        <tr>
+            <td>{{ stats.total_students }}</td>
+            <td>{{ stats.profiles_completed }}</td>
+            <td>{{ stats.total_applications }}</td>
+            <td>{{ stats.pending_count }}</td>
+            <td>{{ stats.approved_count }}</td>
+            <td>{{ stats.rejected_count }}</td>
+        </tr>
+    </table>
+
+    <p style="margin-top:20px;">
+        <a class="btn" href="{{ url_for('admin_students') }}">View All Students</a>
+        <a class="btn" href="{{ url_for('admin_applications') }}">Review Applications</a>
+    </p>
+
+    <h2>Recent Applications</h2>
+    {% if recent_applications %}
+        <table>
+            <tr><th>Student</th><th>Type</th><th>Status</th><th>Submitted</th></tr>
+            {% for a in recent_applications %}
+            <tr>
+                <td>{{ a.username }}</td>
+                <td>{{ a.scholarship_type }}</td>
+                <td><span class="badge {{ a.status }}">{{ a.status }}</span></td>
+                <td>{{ a.submitted_at }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No applications submitted yet.</p>
+    {% endif %}
+{% endblock %}
